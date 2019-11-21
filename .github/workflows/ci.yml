@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies libraries
+      run: docker-compose run --rm node yarn install --no-optional
+    - name: lint
+      run: docker-compose run --rm node yarn run lint
+    - name: test with coverage
+      run: docker-compose run --rm node yarn run test:coverage
+    - name: build
+      run: docker-compose run --rm node yarn run build
