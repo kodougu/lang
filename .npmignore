@@ -1,0 +1,16 @@
+src/
+__tests__/
+node_modules/
+coverage/
+.scannerwork/
+.env
+.env.sample
+.eslintrc.json
+.gitignore
+.npmrc
+.yarnrc
+docker-compose.yml
+sonar-project.properties
+tsconfig.json
+tsconfig.build.json
+yarn.lock

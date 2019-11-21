@@ -1,0 +1,54 @@
+version: '3.7'
+
+services:
+  node:
+    image: node:10.16.0-stretch-slim
+    command: bash -c "yarn run test"
+    working_dir: "/data/dev/kodougu/lang"
+    volumes:
+      - .:/data/dev/kodougu/lang:cached
+
+  sonar-scanner:
+    image: newtmitch/sonar-scanner:3.2.0-alpine
+    entrypoint:
+      - sh
+      - -c
+    command: > 
+      "rm -rf /usr/src/sonar/* && rm -rf /data/dev/kodougu/lang/.scannerwork &&
+      sonar-scanner
+      -Dsonar.projectBaseDir=/data/dev/kodougu/lang
+      -Dsonar.login=${SONAR_LOGIN}
+      -Dsonar.typescript.tsconfigPath=tsconfig.lint.json"
+    environment:
+      - SONAR_USER_HOME=/usr/src/sonar
+      - SONAR_LOGIN
+    volumes:
+      - .:/data/dev/kodougu/lang:cached
+
+  sonar-scanner-preview:
+    image: newtmitch/sonar-scanner:3.2.0-alpine
+    entrypoint:
+      - sh
+      - -c
+    command: > 
+      "rm -rf /usr/src/sonar/* && rm -rf /data/dev/kodougu/lang/.scannerwork &&
+      sonar-scanner
+      -Dsonar.projectBaseDir=/data/dev/kodougu/lang
+      -Dsonar.typescript.tsconfigPath=tsconfig.lint.json
+      -Dsonar.login=${SONAR_LOGIN}
+      -Dsonar.analysis.mode=preview
+      -Dsonar.gitlab.url=https://gitlab.com/
+      -Dsonar.gitlab.user_token=${SONAR_GITLAB_TOKEN}
+      -Dsonar.gitlab.ref_name=${CI_COMMIT_REF_NAME}
+      -Dsonar.gitlab.project_id=${CI_PROJECT_ID}
+      -Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA}
+      -Dsonar.gitlab.prefix_directory=backend/common_modules/lang/"
+    environment:
+      - SONAR_USER_HOME=/usr/src/sonar
+      - SONAR_LOGIN
+      - SONAR_GITLAB_TOKEN
+      - CI_COMMIT_REF_NAME
+      - CI_PROJECT_ID
+      - CI_COMMIT_SHA
+    volumes:
+      - .:/data/dev/kodougu/lang:cached

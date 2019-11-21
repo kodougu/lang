@@ -1,0 +1,64 @@
+{
+  "name": "@kodougu/lang",
+  "description": "utilities library module",
+  "author": {
+    "name": "koda"
+  },
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "watch": "tsc --watch",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "test": "jest",
+    "test:coverage": "jest --coverage --runInBand --detectOpenHandles --forceExit"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.146",
+    "@types/node": "^12.12.7",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "jest": "^24.9.0",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
+    "tsutils": "^3.17.1",
+    "typescript": "^3.7.2",
+    "eslint": "^6.4.0",
+    "prettier": "^1.19.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "src/__tests__/_common"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 60,
+        "functions": 80,
+        "lines": 80
+      }
+    },
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json",
+        "diagnostics": true
+      }
+    }
+  }
+}

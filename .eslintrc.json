@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": { "node": true, "es6": true },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    // prettierは警告
+    "prettier/prettier": "error",
+    // Record<string, any>でしか定義できない型があるのでoffにする
+    "@typescript-eslint/no-explicit-any": "off",
+    // interfaceはI始まりじゃなくてok
+    "@typescript-eslint/interface-name-prefix": "off",
+    // 関数の戻り値は省略化
+    "@typescript-eslint/explicit-function-return-type": "off"
+  }
+}
